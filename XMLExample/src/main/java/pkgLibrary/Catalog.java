@@ -1,7 +1,7 @@
 package pkgLibrary;
 
 import java.util.ArrayList;
-
+import pkgMain.XMLReader;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
@@ -33,13 +33,38 @@ public class Catalog {
 		this.books = books;
 	}
 	
+	public static Book getBook (int cat_id, String book_id) throws BookException {
+		Catalog cat = XMLReader.ReadXMLFile();
+		try{
+		for (Book b: cat.getBooks()){
+			if(b.getId() == book_id){
+				return(b);
+			}
+		}
+			throw new BookException(cat,book_id);
+			
+		}catch (BookException e){
+			throw e;
+		}catch (Exception e){
+			throw e;
+		}
+	}
 
-	
-	
-
-
-	
-	
-	
-	
+	public static void addBook (int id, Book b) throws Exception{
+		Catalog cat = XMLReader.ReadXMLFile();
+		try{
+			for(Book cat_book : cat.getBooks()){
+				if (cat_book.getId() == b.getId())
+					throw new BookException(cat,b);
+				}
+			}catch (BookException e){
+				throw e;
+				
+			}catch (Exception e){
+				throw e;
+			}
+		cat.getBooks().add(b);
+		XMLReader.WriteXMLFile(cat);
+	}
 }
+
